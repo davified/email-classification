@@ -1,10 +1,12 @@
-# Machine learning project template
+# Email classification 
+
+## Data
+
+Source: http://bailando.sims.berkeley.edu/enron_email.html
 
 ## Getting started
 
-1. Fork the repo
-
-2. Clone the repo and `cd` into the directory: `git clone https://github.com/your-username/tw-ml-template your-project-name && cd your-project-name`
+1. Clone the repo and `cd` into the directory: `git clone https://github.com/your-username/email-classification && cd email-classification`
 
 3. Run `bin/setup.sh`. This script will:
 
@@ -22,3 +24,4 @@
 5. To run tests: `bin/run_tests.sh`
 
 6. To work with jupyter notebook, run `jupyter notebook`
+
