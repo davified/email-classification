@@ -6,5 +6,5 @@ set -e
 PROJ_DIR="$(pwd)"
 
 echo "Running unit tests with nose"
-source .venv/bin/activate
-nosetests -w "${PROJ_DIR}/app/tests"
+source ${PROJ_DIR}/.venv/bin/activate
+nosetests -w "${PROJ_DIR}/app"

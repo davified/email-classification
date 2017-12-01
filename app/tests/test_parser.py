@@ -1,6 +1,7 @@
 import pandas as pd
 import unittest
-from parser.text_to_csv_parser import TextToCSVParser
+from app.parser.text_to_csv_parser import TextToCSVParser
+
 
 class TestTextToCSVParser(unittest.TestCase):
     def setUp(self):
