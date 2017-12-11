@@ -1,0 +1,7 @@
+---
+# vars file for gocd (Ubuntu specific)
+
+gocd_server_packages:
+  - go-server={{ gocd_server_version }}-*
+gocd_agent_packages:
+  - go-agent={{ gocd_agent_version }}-*

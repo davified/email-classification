@@ -1,0 +1,14 @@
+---
+# handlers file for gocd
+
+- name: restart gocd server
+  service: name={{ gocd_server_service_name }} state=restarted
+  tags:
+    - gocd
+    - gocd_server
+
+- name: restart gocd agent
+  service: name={{ gocd_agent_service_name }} state=restarted
+  tags:
+    - gocd
+    - gocd_agent
