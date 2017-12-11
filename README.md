@@ -25,3 +25,7 @@ Source: http://bailando.sims.berkeley.edu/enron_email.html
 
 6. To work with jupyter notebook, run `jupyter notebook`
 
+## IntelliJ tests config
+
+To configure the tests to run on IntelliJ, Select 'Edit Configurations...' and configure it as such:
+![intellij configuration](./images/intellij_ide_config.png)
