@@ -8,5 +8,6 @@ def load_files_in_directory(source_directory, file_ext):
             contents = open('{}/{}'.format(source_directory, file), mode='r')
             key = int(file.split('.')[0])
             categories[key] = contents.read()
+            contents.close()
 
     return categories

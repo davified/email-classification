@@ -2,10 +2,10 @@ import os, unittest
 from app.utils import load_files_in_directory
 
 
-class TestDataLoader(unittest.TestCase):
+class TestUtils(unittest.TestCase):
     def test_data_loader_should_load_data(self):
-        project_dir = os.getcwd()
-        source_dir = os.path.join(project_dir, 'data/enron_with_categories/1')
+        project_dir = os.path.dirname(os.path.abspath(__file__))
+        source_dir = os.path.join(project_dir, '../../data/enron_with_categories/1')
         categories = load_files_in_directory(source_dir, '.cats')
         self.assertEqual(len(categories), 834)
         self.assertTrue(isinstance(categories, dict))
