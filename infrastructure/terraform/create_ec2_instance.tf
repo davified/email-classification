@@ -23,6 +23,8 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "gocd" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.gocd-security.id}"]
+  key_name = "email-classification"
 
   tags {
     Name = "email-classification"
@@ -31,12 +33,6 @@ resource "aws_instance" "gocd" {
 
 resource "aws_security_group" "gocd-security" {
   name = "gocd"
-  ingress {
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   ingress {
     from_port = 22
