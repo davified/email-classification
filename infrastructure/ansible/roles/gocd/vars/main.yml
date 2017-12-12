@@ -1,5 +1,0 @@
----
-# vars file for gocd
-
-gocd_server_service_name: go-server
-gocd_agent_service_name: go-agent

@@ -1,8 +1,0 @@
----
-# defaults file for gocd
-
-gocd_server_version: 15.2.0
-gocd_server: false
-gocd_agent_version: 15.2.0
-gocd_agent: true
-gocd_agent_server: 127.0.0.1
