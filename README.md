@@ -29,3 +29,22 @@ Source: http://bailando.sims.berkeley.edu/enron_email.html
 
 To configure the tests to run on IntelliJ, Select 'Edit Configurations...' and configure it as such:
 ![intellij configuration](./images/intellij_ide_config.png)
+
+## DevOps
+
+### To provision and configure GoCD:
+
+Pre-requisites:
+1. Generate an AWS IAM keypair with the name `email-classification` and copy private email-classification.pem file to ~/.ssh/
+2. Obtain and export AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as environment shell variables
+
+Steps:
+```
+# To provision AWS EC2 instance (Ubuntu)
+cd infrastructure/ansible
+terraform apply
+
+# To install and configure GoCD:
+cd - # ensure you are in project root directory
+ansible-playbook -i ./infrastructure/ansible/inventory.ini ./infrastructure/ansible/main.yml -v --tags "build"
+```
