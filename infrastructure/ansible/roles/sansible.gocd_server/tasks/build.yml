@@ -1,0 +1,73 @@
+---
+
+- name: Ensure hostname is resolvable
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    line: "127.0.0.1 localhost {{ ansible_hostname }}"
+    regexp: ^127\.0\.0\.1
+
+- name: Install some dependencies
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ gocd_server.packages }}"
+
+- name: Install AWS CLI
+  become: yes
+  pip:
+    name: "{{ item }}"
+  when: gocd_server.aws.install_cli
+  with_items:
+    - awscli
+    - boto
+
+- name: Add GoCD Apt key
+  become: yes
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ gocd_server.repo.key_id }}"
+    state: present
+
+- name: Install GoCD repo
+  become: yes
+  apt_repository:
+    repo: "{{ gocd_server.repo.source }}"
+    state: present
+    update_cache: yes
+
+- name: Install go-server
+  become: yes
+  apt:
+    name: "go-server={{ gocd_server.version | regex_replace('^(.*?)\\*?$', '\\1*') }}"
+    state: present
+    force: yes
+
+- name: Create various directories
+  become: yes
+  file:
+    group: "{{ gocd_server.group }}"
+    owner: "{{ gocd_server.user }}"
+    path: "/home/{{ gocd_server.user }}/{{ item }}"
+    state: directory
+  with_items:
+    - .aws
+    - bin
+    - work/go-server
+    - work/go-server/plugins/external
+    - work/go-server/artifacts/pipelines
+
+- name: Add go-server to autostart
+  become: yes
+  service:
+    name: go-server
+    enabled: yes
+    state: started
+
+- name: Install go-server plugins
+  become: yes
+  become_user: "{{ gocd_server.user }}"
+  get_url:
+    dest: /home/{{ gocd_server.user }}/work/go-server/plugins/external
+    url:  "{{ item }}"
+  with_items: "{{ gocd_server.plugins }}"

@@ -1,0 +1,114 @@
+---
+
+- name: Ensure hostname is resolvable
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    line: "127.0.0.1 localhost {{ ansible_hostname }}"
+    regexp: ^127\.0\.0\.1
+
+- name: Copy secrets from S3
+  become: yes
+  become_user: "{{ gocd_server.user }}"
+  shell: "aws s3 cp --region {{ gocd_server.aws.region }} {{ item.s3_path }} {{ item.local_path }}"
+  args:
+    creates: "{{ item.local_path }}"
+  with_items: "{{ gocd_server.aws.s3_secret_files }}"
+
+- name: Secure secrets from S3
+  become: yes
+  file:
+    group: "{{ gocd_server.user }}"
+    mode: "{{ item.mode | default(0600) }}"
+    owner: "{{ gocd_server.user }}"
+    path: "{{ item.local_path }}"
+  with_items: "{{ gocd_server.aws.s3_secret_files }}"
+
+- name: Configure SSH
+  become: yes
+  copy:
+    src: ssh_config
+    dest: "/home/{{ gocd_server.user }}/.ssh/config"
+    group: "{{ gocd_server.group }}"
+    owner: "{{ gocd_server.user }}"
+    mode: 0600
+
+- name: Configure SSH agent setup in bash profile
+  become: yes
+  template:
+    src: .bashrc.j2
+    dest: "/home/{{ gocd_server.user }}/.bashrc"
+    group: "{{ gocd_server.user }}"
+    owner: "{{ gocd_server.user }}"
+    mode: 0644
+
+- name: Ensures go-server configuration
+  become: yes
+  template:
+    dest: /etc/default/go-server
+    group: "{{ gocd_server.group }}"
+    owner: "{{ gocd_server.user }}"
+    src: defaults.j2
+  notify:
+    - restart go-server
+
+- name: Ensures go-server user passwords file
+  become: yes
+  template:
+    dest: "/home/{{ gocd_server.user }}/passwd"
+    group: "{{ gocd_server.group }}"
+    mode: 0600
+    owner: "{{ gocd_server.user }}"
+    src: passwd.j2
+  when: gocd_server.passwd_users | length > 0
+
+- name: Ensures go-server backup and restore scripts
+  become: yes
+  template:
+    dest: "{{ item.dest }}"
+    group: "{{ gocd_server.group }}"
+    mode: 0750
+    owner: "{{ gocd_server.user }}"
+    src: "{{ item.src }}"
+  with_items:
+    - src: aws_s3_backup.sh.j2
+      dest: "/home/{{ gocd_server.user }}/bin/aws_s3_backup.sh"
+    - src: aws_s3_restore.sh.j2
+      dest: "/home/{{ gocd_server.user }}/bin/aws_s3_restore.sh"
+    - src: aws_s3_restore_artifacts.sh.j2
+      dest: "/home/{{ gocd_server.user }}/bin/aws_s3_restore_artifacts.sh"
+  when: gocd_server.aws.backup_bucket
+  notify:
+    - restart go-server
+
+- name: Ensures go-server backup cron job
+  become: yes
+  cron:
+    hour: 9,12,15,18
+    job: "PATH=$PATH /home/{{ gocd_server.user }}/bin/aws_s3_backup.sh > /var/log/go-server/aws_s3_backup.log 2>&1"
+    name: Backup go-server
+    minute: 0
+    weekday: 1-7
+
+- name: Setup AWS credentials
+  become: yes
+  become_user: "{{ gocd_server.user }}"
+  template:
+    dest: "/home/{{ gocd_server.user }}/.aws/credentials"
+    mode: 0600
+    src: aws_credentials.j2
+  when: gocd_server.aws.access_key_id
+
+- name: Restore config from AWS
+  become: yes
+  become_user: "{{ gocd_server.user }}"
+  command: "/home/{{ gocd_server.user }}/bin/aws_s3_restore.sh"
+  args:
+    chdir: "/home/{{ gocd_server.user }}"
+  when: gocd_server.aws.backup_bucket
+
+- name: Ensure gocd server is running
+  become: yes
+  service:
+    name: go-server
+    state: started

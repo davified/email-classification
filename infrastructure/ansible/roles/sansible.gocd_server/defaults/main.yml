@@ -1,0 +1,56 @@
+---
+
+gocd_server:
+  backup_passwd: backup
+  backup_user: backup
+  group: go
+  java_version: 8
+  port_ssl: 8154
+  port: 8153
+  restore_artifacts_on_boot: true
+  server_max_mem: 512m
+  server_max_perm_gen: 128m
+  server_mem: 256m
+  server_min_perm_gen: 128m
+  start_opts: ""
+  user: go
+  version: 16.*
+
+  packages:
+    - git
+    - python-pip
+    - tree
+    - unzip
+
+  # Should be a list of jar urls to download
+  plugins: [ ]
+
+  aws:
+    # backup_bucket: s3://backup.gocd_server.my.domain
+    access_key_id: ~
+    backup_bucket: ~
+    install_cli: yes
+    region: eu-west-1
+    secret_access_key: ~
+
+    # List of files that need to be copied and secured from S3
+    # These should be things like SSH keys, vault passes etc.
+    # eg.
+    # s3_secret_files:
+    #  - s3_path: s3://ansible-vars/gocd/mgt-prd/id_rsa
+    #    local_path: "/home/go/.ssh"
+    #    mode: 0600
+    #  - s3_path: s3://ansible-vars/gocd/mgt-prd/id_rsa.pub
+    #    local_path: "/home/go/.ssh"
+    #    mode: 0600
+    s3_secret_files: [ ]
+
+  dependencies:
+    skip_java: no
+
+  passwd_users:
+    backup: "{SHA}iRIdyZx9uc4lU6CToqsp4H99808="
+
+  repo:
+    key_id: 8816C449
+    source: deb https://download.gocd.io /

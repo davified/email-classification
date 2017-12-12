@@ -1,4 +1,12 @@
-- hosts: all
+- name: Install GO CD Server
   become: true
+  hosts: gocd
+
+#  pre_tasks:
+#    - name: Update apt
+#      command: apt-get update -y
+#      tags:
+#        - build
+
   roles:
-    - gocd
+    - role: sansible.gocd_server

@@ -1,0 +1,14 @@
+---
+
+- name: Assert vendor variable
+  assert:
+    that:
+      - java.vendor in [ 'oracle', 'openjdk' ]
+
+- name: Build Oracle Java
+  include: build/build-oracle.yml
+  when: java.vendor == 'oracle'
+
+- name: Install OpenJDK Java
+  include: build/build-openjdk.yml
+  when: java.vendor == 'openjdk'
