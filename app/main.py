@@ -1,28 +1,27 @@
 import os
 
-from app.pipeline.data_vectorizer import DataVectorizer
-from app.utils import load_files_as_dict, sort_dictionary_by_keys, simplify_categories
-from app.pipeline.data_loader import DataLoader
+from sklearn.model_selection import train_test_split
 
-os.environ['KERAS_BACKEND'] = 'tensorflow'
+from app.machine_learning_models.CustomRandomForestClassifier import CustomRandomForestClassifier
+from app.pipeline.data_vectorizer import DataVectorizer
+from app.pipeline.data_loader import DataLoader
 
 
 def main():
-    project_dir = os.getcwd()
+    project_dir = os.path.dirname(os.path.abspath(__file__))
     source_dir = os.path.join(project_dir, '../data/enron_with_categories/1')
 
-    categories = load_files_as_dict(source_dir, '.cats')
-    simple_categories = simplify_categories(categories)
-    sorted_categories = sort_dictionary_by_keys(simple_categories)
+    data_loader = DataLoader()
+    sorted_categories, sorted_emails = data_loader.load_and_sort_data(source_dir)
+    _data, _labels, _filenames = data_loader.get_data_and_labels(sorted_emails, sorted_categories)
 
-    emails = load_files_as_dict(source_dir, '.txt')
-    sorted_emails = sort_dictionary_by_keys(emails)
-
-    data_loader = DataLoader(sorted_emails, sorted_categories)
-    data, labels, filenames = data_loader.get_data_and_labels()
-
-    vectorizer = DataVectorizer(data, labels)
+    vectorizer = DataVectorizer(_data, _labels)
     data, labels = vectorizer.get_vectorized_data_and_labels()
+
+    X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)
+
+    rfc_model = CustomRandomForestClassifier()
+    rfc_model.train(X_train, y_train)
 
 
 
