@@ -10,4 +10,4 @@ pipelines:
             unit_tests:
               tasks:
                - exec:
-                   command: echo "running unit tests" && ls -la
+                   command: echo "running unit tests" && ls -la 
