@@ -8,7 +8,7 @@ class TestDataLoader(unittest.TestCase):
     def setUp(self):
         project_dir = os.path.dirname(os.path.abspath(__file__))
         source_dir = os.path.join(project_dir, '../../data/enron_with_categories/1')
-        self.data_loader = DataLoader()
+        self.data_loader = DataLoader(source_dir)
 
         self.categories = self.data_loader._load_files_as_dict(source_dir, '.cats')
         self.sorted_emails = OrderedDict({'1': 'email sample 1', '2': 'email sample 2', '3': 'email sample 3'})
@@ -16,12 +16,9 @@ class TestDataLoader(unittest.TestCase):
 
     def test_get_data_and_labels(self):
 
-        emails_list, categories_list, filenames_list = self.data_loader.get_data_and_labels(self.sorted_emails, self.sorted_categories)
+        emails_list, categories_list, filenames_list = self.data_loader.get_data_and_labels()
         self.assertEqual(len(emails_list), len(categories_list))
         self.assertEqual(len(emails_list), len(filenames_list))
-        self.assertEqual(emails_list, ['email sample 1', 'email sample 2', 'email sample 3'])
-        self.assertEqual(categories_list, [[0, 1, 0], [1, 1, 1], [0, 0, 1]])
-        self.assertEqual(filenames_list, ['1', '2', '3'])
 
     def test_data_loader_should_load_data(self):
         self.assertEqual(len(self.categories), 834)
