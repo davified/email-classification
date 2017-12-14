@@ -62,7 +62,7 @@
   service:
     name: go-server
     enabled: yes
-    state: started
+    state: restarted
 
 - name: Install go-server plugins
   become: yes
