@@ -1,0 +1,11 @@
+test_and_deploy:
+  materials:
+    mygit:
+      git: http://github.com/davified/email-classification.git
+  stages:
+    - build:
+        jobs:
+          build:
+            tasks:
+             - exec:
+                 command: echo 'hello CI'
