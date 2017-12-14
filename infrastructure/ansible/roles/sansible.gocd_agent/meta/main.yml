@@ -1,0 +1,28 @@
+---
+
+galaxy_info:
+  author: "Wojtek Oledzki"
+  description: "Install the Go Continuous Delivery agent."
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - precise
+        - trusty
+        - xenial
+  categories:
+    - development
+    - cd
+
+dependencies:
+  - role: sansible.users_and_groups
+#    users_and_groups:
+#      users:
+#        - name: "{{ gocd_agent.user }}"
+#          gecos: Go CD user
+
+  - role: sansible.java
+    java:
+      version: "{{ gocd_agent.java_version }}"
+    when: not gocd_agent.dependencies.skip_java

@@ -19,19 +19,19 @@ galaxy_info:
 
 dependencies:
   - role: sansible.users_and_groups
-    users_and_groups:
-      users:
-        - name: "{{ gocd_server.user }}"
-          gecos: Go CD user
-      groups:
-        - name: "{{ gocd_server.user }}"
-      sudoers:
-        - name: wheel
-          user: "%wheel"
-          runas: "ALL=(ALL)"
-          commands: "NOPASSWD: ALL"
-      whitelist_groups:
-        - admins
+#    users_and_groups:
+#      users:
+#        - name: "{{ gocd_server.user }}"
+#          gecos: Go CD user
+#      groups:
+#        - name: "{{ gocd_server.user }}"
+#      sudoers:
+#        - name: wheel
+#          user: "%wheel"
+#          runas: "ALL=(ALL)"
+#          commands: "NOPASSWD: ALL"
+#      whitelist_groups:
+#        - admins
 
   - role: sansible.java
     java:

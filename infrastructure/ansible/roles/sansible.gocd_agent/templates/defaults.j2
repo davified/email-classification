@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+export GO_SERVER={{ gocd_agent.server }}
+export GO_SERVER_PORT={{ gocd_agent.port }}
+export GO_AGENT_SYSTEM_PROPERTIES="{{ gocd_agent.start_opts }}"
+export AGENT_WORK_DIR={{ gocd_agent.user_dir }}/work/${SERVICE_NAME}
+export AGENT_MEM={{ gocd_agent.agent_mem }}
+export AGENT_MAX_MEM={{ gocd_agent.agent_max_mem }}
+
+DAEMON=Y
+VNC=N
+
+export GOPATH=/home/{{ gocd_agent.user }}/go
+export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin

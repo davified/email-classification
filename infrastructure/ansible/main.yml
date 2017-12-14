@@ -9,4 +9,5 @@
 #        - build
 
   roles:
-    - role: sansible.gocd_server
+    - sansible.gocd_server
+    - sansible.gocd_agent
