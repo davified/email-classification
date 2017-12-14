@@ -23,7 +23,7 @@ class TestDataVectorizer(unittest.TestCase):
         self.vectorizer.fit_tokenizer(self.texts)
 
         sequences = self.vectorizer.convert_texts_to_sequences(self.texts)
-        self.assertEquals(sequences, [[1, 3], [1, 2], [1, 4, 5, 2]])
+        self.assertEqual(sequences, [[1, 3], [1, 2], [1, 4, 5, 2]])
 
     def test_should_zeropad_sequences(self):
         self.vectorizer.fit_tokenizer(self.texts)
@@ -31,9 +31,9 @@ class TestDataVectorizer(unittest.TestCase):
         MAX_SEQUENCE_LENGTH = 150
         padded_sequences = self.vectorizer.zeropad_sequences(sequences, max_length=MAX_SEQUENCE_LENGTH)
 
-        self.assertEquals(padded_sequences.shape, (len(sequences), MAX_SEQUENCE_LENGTH))
+        self.assertEqual(padded_sequences.shape, (len(sequences), MAX_SEQUENCE_LENGTH))
 
     def test_should_convert_labels_to_categorical_vector(self):
         labels = self.vectorizer.convert_labels_to_categorical_vector(self.labels)
 
-        self.assertEquals(labels.shape, (len(self.labels), len(set(self.labels))))
+        self.assertEqual(labels.shape, (len(self.labels), len(set(self.labels))))

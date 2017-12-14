@@ -1,8 +1,12 @@
 import os
+
+from app.VectorizedData.vectorized_data import VectorizedData
+from app.pipeline.data_vectorizer import DataVectorizer
 from app.utils import load_files_as_dict, sort_dictionary_by_keys, simplify_categories
 from app.pipeline.data_loader import DataLoader
 
-os.environ['KERAS_BACKEND']='tensorflow'
+os.environ['KERAS_BACKEND'] = 'tensorflow'
+
 
 def main():
     project_dir = os.getcwd()
@@ -18,8 +22,15 @@ def main():
     data_loader = DataLoader(sorted_emails, sorted_categories)
     data, labels, filenames = data_loader.get_data_and_labels()
 
-    # tokenizer = fit_tokenizer(data)
-    # assert tokenizer.document_count == len (data)
+    vectorizer = DataVectorizer()
+    vectorizer.fit_tokenizer(data)
+    sequences = vectorizer.convert_texts_to_sequences(data)
+    data_2 = vectorizer.zeropad_sequences(sequences)
+
+    labels_2 = vectorizer.convert_labels_to_categorical_vector(labels)
+
+    vectorized_data = VectorizedData(data_2, labels_2)
 
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    main()
