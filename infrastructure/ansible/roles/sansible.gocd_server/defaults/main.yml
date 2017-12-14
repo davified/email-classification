@@ -23,7 +23,8 @@ gocd_server:
     - unzip
 
   # Should be a list of jar urls to download
-  plugins: [ ]
+  plugins:
+    - 'https://github.com/tomzo/gocd-yaml-config-plugin/releases/download/0.6.0/yaml-config-plugin-0.6.0.jar'
 
   aws:
     # backup_bucket: s3://backup.gocd_server.my.domain
