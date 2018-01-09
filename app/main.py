@@ -30,4 +30,4 @@ def initialize_model():
 
 
 if __name__ == "__main__":
-    main()
+    initialize_model()
