@@ -21,7 +21,8 @@ class TestModelEvaluation(unittest.TestCase):
         _data, _labels, _filenames = data_loader.get_data_and_labels()
 
         vectorizer = DataVectorizer(_data, _labels)
-        data, labels = vectorizer.get_vectorized_data_and_labels()
+        data = vectorizer.get_vectorized_data()
+        labels = vectorizer.get_vectorized_labels()
 
         self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(data, labels, random_state=0)
 

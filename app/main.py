@@ -19,13 +19,16 @@ def main():
     _data, _labels, _filenames = data_loader.get_data_and_labels()
 
     vectorizer = DataVectorizer(_data, _labels)
-    data, labels = vectorizer.get_vectorized_data_and_labels()
+    data = vectorizer.get_vectorized_data()
+    labels = vectorizer.get_vectorized_labels()
 
     X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)
 
     # model = CustomRandomForestClassifier()
     model = LSTMModel(input_length=INPUT_LENGTH, no_of_outputs=NO_OF_OUTPUTS)
     model.train(X_train, y_train)
+
+    model.predict('i am so worried. this scam is going to get found out')
 
 
 if __name__ == "__main__":

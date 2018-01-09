@@ -27,7 +27,8 @@ def initialize_model():
     _data, _labels, _filenames = data_loader.get_data_and_labels()
 
     vectorizer = DataVectorizer(_data, _labels)
-    data, labels = vectorizer.get_vectorized_data_and_labels()
+    data = vectorizer.get_vectorized_data()
+    labels = vectorizer.get_vectorized_labels()
 
     X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)
 
@@ -44,7 +45,7 @@ def get_data():
     _data, _labels, _filenames = data_loader.get_data_and_labels()
 
     vectorizer = DataVectorizer(_data, _labels)
-    data, _ = vectorizer.get_vectorized_data_and_labels()
+    data = vectorizer.get_vectorized_data()
     sample_row = data[0,:]
     return np.reshape(sample_row, (-1, 1000))
 

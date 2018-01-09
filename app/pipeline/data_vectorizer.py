@@ -10,13 +10,16 @@ class DataVectorizer:
         self.tokenizer = Tokenizer(num_words=num_words, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n')
         self.tokenizer.fit_on_texts(self.texts)
 
-    def get_vectorized_data_and_labels(self, max_length=1000):
+    def get_vectorized_data(self, max_length=1000):
         sequences = self._convert_texts_to_sequences()
         data = self._zeropad_sequences(sequences, max_length=max_length)
 
+        return data
+
+    def get_vectorized_labels(self):
         labels = self._convert_labels_to_categorical_vector()
 
-        return data, labels
+        return labels
 
     def _convert_texts_to_sequences(self):
         sequences = self.tokenizer.texts_to_sequences(self.texts)

@@ -35,6 +35,7 @@ class TestDataVectorizer(unittest.TestCase):
 
     def test_should_return_vectorized_data_and_labels(self):
         MAX_LENGTH=42
-        data, labels = self.vectorizer.get_vectorized_data_and_labels(max_length=MAX_LENGTH)
+        data = self.vectorizer.get_vectorized_data(max_length=MAX_LENGTH)
+        labels = self.vectorizer.get_vectorized_labels()
         self.assertEqual(data.shape, (len(self.texts), MAX_LENGTH))
         self.assertEqual(labels.shape, (len(self.labels), len(set(self.labels))))
