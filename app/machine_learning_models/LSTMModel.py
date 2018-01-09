@@ -19,11 +19,10 @@ class LSTMModel:
         self.classifier.fit(X_train, np.array(y_train), validation_split=0.5, epochs=epochs)
 
     def predict(self, X):
-        return self.classifier.predict(X)
+        return self.classifier.predict(X).argmax(axis=1)
 
     def _calculate_recall_score(self, X_val, y_val):
         y_predicted = self.classifier.predict(X_val)
-        print(y_val)
         return metrics.recall_score(y_val, y_predicted.argmax(axis=1), average='weighted')
 
     def _calculate_precision_score(self, X_val, y_val):

@@ -18,12 +18,12 @@ class TestDataVectorizer(unittest.TestCase):
         self.assertNotIn(',', self.vectorizer.tokenizer.word_docs.keys())
 
     def test_should_convert_text_to_sequences(self):
-        sequences = self.vectorizer._convert_texts_to_sequences()
+        sequences = self.vectorizer._convert_texts_to_sequences(self.texts)
         self.assertEqual(sequences, [[1, 3], [1, 2], [1, 4, 5, 2]])
 
     def test_should_zeropad_sequences(self):
         MAX_SEQUENCE_LENGTH = 150
-        sequences = self.vectorizer._convert_texts_to_sequences()
+        sequences = self.vectorizer._convert_texts_to_sequences(self.texts)
         padded_sequences = self.vectorizer._zeropad_sequences(sequences, max_length=MAX_SEQUENCE_LENGTH)
 
         self.assertEqual(padded_sequences.shape, (len(sequences), MAX_SEQUENCE_LENGTH))
@@ -35,7 +35,7 @@ class TestDataVectorizer(unittest.TestCase):
 
     def test_should_return_vectorized_data_and_labels(self):
         MAX_LENGTH=42
-        data = self.vectorizer.get_vectorized_data(max_length=MAX_LENGTH)
+        data = self.vectorizer.get_vectorized_data(self.texts, max_length=MAX_LENGTH)
         labels = self.vectorizer.get_vectorized_labels()
         self.assertEqual(data.shape, (len(self.texts), MAX_LENGTH))
         self.assertEqual(labels.shape, (len(self.labels), len(set(self.labels))))

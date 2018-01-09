@@ -5,13 +5,14 @@ from sklearn.preprocessing import MultiLabelBinarizer
 
 class DataVectorizer:
     def __init__(self, texts, labels, num_words=10000):
-        self.texts = texts
         self.labels = labels
         self.tokenizer = Tokenizer(num_words=num_words, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n')
-        self.tokenizer.fit_on_texts(self.texts)
+        self.tokenizer.fit_on_texts(texts)
 
-    def get_vectorized_data(self, max_length=1000):
-        sequences = self._convert_texts_to_sequences()
+    def get_vectorized_data(self, texts, max_length=1000):
+        if type(texts) != list:
+            raise Exception('get_vectorized_data() accepts a list as the first argument')
+        sequences = self._convert_texts_to_sequences(texts)
         data = self._zeropad_sequences(sequences, max_length=max_length)
 
         return data
@@ -21,8 +22,8 @@ class DataVectorizer:
 
         return labels
 
-    def _convert_texts_to_sequences(self):
-        sequences = self.tokenizer.texts_to_sequences(self.texts)
+    def _convert_texts_to_sequences(self, texts):
+        sequences = self.tokenizer.texts_to_sequences(texts)
         return sequences
 
     def _zeropad_sequences(self, sequences, max_length=1000):
