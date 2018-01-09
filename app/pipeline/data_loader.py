@@ -56,7 +56,7 @@ class DataLoader:
     def _simplify_categories(self, categories):
         # a simple/downsampled implementation of category-labelling for the first iteration
         BROAD_CATEGORY_INDEX_POSITION = 0
-        BROAD_CATEGORY = '4' # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
+        BROAD_CATEGORY = '1' # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
         SUBCATEGORY_INDEX_POSITION = 1
 
         simple_categories = {}

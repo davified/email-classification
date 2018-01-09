@@ -12,7 +12,7 @@ from app.pipeline.data_vectorizer import DataVectorizer
 class TestModelEvaluation(unittest.TestCase):
     def setUp(self):
         INPUT_LENGTH=1000
-        NO_OF_OUTPUTS=17
+        NO_OF_OUTPUTS=8
 
         project_dir = os.path.dirname(os.path.abspath(__file__))
         source_dir = os.path.join(project_dir, '../../data/enron_with_categories/1')
@@ -21,7 +21,7 @@ class TestModelEvaluation(unittest.TestCase):
         _data, _labels, _filenames = data_loader.get_data_and_labels()
 
         vectorizer = DataVectorizer(_data, _labels)
-        data = vectorizer.get_vectorized_data()
+        data = vectorizer.get_vectorized_data(_data)
         labels = vectorizer.get_vectorized_labels()
 
         self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(data, labels, random_state=0)
@@ -29,7 +29,7 @@ class TestModelEvaluation(unittest.TestCase):
         self.model = LSTMModel(input_length=INPUT_LENGTH, no_of_outputs=NO_OF_OUTPUTS)
         self.model.train(self.X_train, self.y_train, epochs=1)
 
-    @unittest.skip
+    # @unittest.skip
     def test_should_have_recall_score_above_minimum_threshold(self):
         recall = self.model._calculate_recall_score(self.X_val, self.y_val)
         self.assertTrue(recall > 0.85, "recall of {} is below threshold".format(recall))

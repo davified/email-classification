@@ -16,18 +16,18 @@ class LSTMModel:
         self.classifier.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     def train(self, X_train, y_train, epochs=3):
-        self.classifier.fit(X_train, np.array(y_train), validation_split=0.5, epochs=epochs)
+        self.classifier.fit(X_train, np.array(y_train), validation_split=0.7, epochs=epochs)
 
     def predict(self, X):
         return self.classifier.predict(X).argmax(axis=1)
 
     def _calculate_recall_score(self, X_val, y_val):
         y_predicted = self.classifier.predict(X_val)
-        return metrics.recall_score(y_val, y_predicted.argmax(axis=1), average='weighted')
+        return metrics.recall_score(y_val, y_predicted.round(), average='weighted')
 
     def _calculate_precision_score(self, X_val, y_val):
         y_predicted = self.classifier.predict(X_val)
-        return metrics.precision_score(y_val, y_predicted, average='weighted')
+        return metrics.precision_score(y_val, y_predicted.round(), average='weighted')
 
 
 
