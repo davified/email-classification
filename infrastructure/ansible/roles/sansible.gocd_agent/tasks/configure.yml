@@ -61,6 +61,12 @@
     src: aws/credentials.j2
   when: gocd_agent.aws.profiles
 
+- name: Create /home/go/.ssh
+  file:
+    path: /home/go/.ssh
+    state: directory
+    mode: 0700
+
 - name: Configure SSH
   become: yes
   copy:
@@ -101,7 +107,7 @@
 
 - name: Configure Git for Go CD user
   become: yes
-  become_user: "{{ gocd_agent.user }}"
+#  become_user: "{{ gocd_agent.user }}"
   template:
     dest: "/home/{{ gocd_agent.user }}/.gitconfig"
     src: gitconfig.j2

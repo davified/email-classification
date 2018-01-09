@@ -37,4 +37,4 @@ class TestDataLoader(unittest.TestCase):
         simple_categories = self.data_loader._simplify_categories(self.categories)
         self.assertEqual(len(simple_categories), len(self.categories))
         self.assertTrue(isinstance(simple_categories, dict))
-        self.assertTrue(len(list(simple_categories.values())[0]) > 0)
+        self.assertTrue(len(list(simple_categories.values())) > 0)

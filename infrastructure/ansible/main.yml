@@ -1,4 +1,4 @@
-- name: Install GO CD Server
+- name: Install GO CD Server and Agent
   become: true
   hosts: gocd
 

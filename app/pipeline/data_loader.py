@@ -55,17 +55,20 @@ class DataLoader:
 
     def _simplify_categories(self, categories):
         # a simple/downsampled implementation of category-labelling for the first iteration
-        simple_categories = {}
-        for key, category in categories.items():
-            simple_categories[key] = []
-            categories_in_a_single_email = category.split('\n')
+        BROAD_CATEGORY_INDEX_POSITION = 0
+        BROAD_CATEGORY = '4' # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
+        SUBCATEGORY_INDEX_POSITION = 1
 
-            for cat in categories_in_a_single_email:
-                if cat.split(',')[0] != '':
-                    simple_categories[key].append(cat.split(',')[0])
+        simple_categories = {}
+        for key, categories_for_single_file in categories.items():
+            simple_categories[key] = []
+
+            for line in categories_for_single_file.split('\n'):
+                line_labels = line.split(',')
+                if line_labels[0] != '' and line_labels[BROAD_CATEGORY_INDEX_POSITION] == BROAD_CATEGORY:
+                    simple_categories[key].append(line_labels[SUBCATEGORY_INDEX_POSITION])
 
             simple_categories[key] = list(set(simple_categories[key]))
-
         return simple_categories
 
 
