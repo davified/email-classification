@@ -9,7 +9,7 @@ from app.pipeline.data_loader import DataLoader
 from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
 
 
-def main():
+def initialize_model():
     project_dir = os.path.dirname(os.path.abspath(__file__))
     source_dir = os.path.join(project_dir, '../data/enron_with_categories/1')
 
@@ -26,19 +26,7 @@ def main():
     model = LSTMModel(input_length=INPUT_LENGTH, no_of_outputs=NO_OF_OUTPUTS)
     model.train(X_train, y_train, epochs=1)
 
-    # predict model
-    test_input = '''David,
-
-anger
-
-annoyance, displeasure, or hostility.
-
-annoyance, vexation, exasperation, crossness, irritation, irritability, indignation, pique, displeasure, resentment; 
-
-Vince'''
-    vectorized_input = vectorizer.get_vectorized_data([test_input])
-    prediction = model.predict(vectorized_input)
-    print(prediction)
+    return model, vectorizer
 
 
 if __name__ == "__main__":
