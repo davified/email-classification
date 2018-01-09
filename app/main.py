@@ -6,12 +6,10 @@ from app.machine_learning_models.CustomRandomForestClassifier import CustomRando
 from app.machine_learning_models.LSTMModel import LSTMModel
 from app.pipeline.data_vectorizer import DataVectorizer
 from app.pipeline.data_loader import DataLoader
+from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
 
 
 def main():
-    INPUT_LENGTH = 1000
-    NO_OF_OUTPUTS = 17
-
     project_dir = os.path.dirname(os.path.abspath(__file__))
     source_dir = os.path.join(project_dir, '../data/enron_with_categories/1')
 
@@ -29,13 +27,15 @@ def main():
     model.train(X_train, y_train, epochs=1)
 
     # predict model
-    test_input = '''Mike,
+    test_input = '''David,
 
-I am going to carry out my plan. Please change the audit statements, delete all traces and transfer $20 billion to my personal secret account.
+anger
 
+annoyance, displeasure, or hostility.
 
-Thanks,
-'''
+annoyance, vexation, exasperation, crossness, irritation, irritability, indignation, pique, displeasure, resentment; 
+
+Vince'''
     vectorized_input = vectorizer.get_vectorized_data([test_input])
     prediction = model.predict(vectorized_input)
     print(prediction)

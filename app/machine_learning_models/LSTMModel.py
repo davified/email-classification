@@ -18,6 +18,9 @@ class LSTMModel:
     def train(self, X_train, y_train, epochs=3):
         self.classifier.fit(X_train, np.array(y_train), validation_split=0.7, epochs=epochs)
 
+    def predict_proba(self, X):
+        return self.classifier.predict(X)
+
     def predict(self, X):
         return self.classifier.predict(X).argmax(axis=1)
 

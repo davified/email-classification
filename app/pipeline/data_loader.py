@@ -1,6 +1,6 @@
 import os
 from collections import OrderedDict
-
+from app.constants import BROAD_CATEGORY
 
 class DataLoader:
     def __init__(self, source_dir):
@@ -40,15 +40,15 @@ class DataLoader:
         return sorted_emails, sorted_categories
 
     def _load_files_as_dict(self, source_directory, file_ext):
-        categories = {}
+        file_contents = {}
         for i, file in enumerate(os.listdir(source_directory)):
             if file_ext in file:
                 contents = open('{}/{}'.format(source_directory, file), mode='r')
                 key = int(file.split('.')[0])
-                categories[key] = contents.read()
+                file_contents[key] = contents.read()
                 contents.close()
 
-        return categories
+        return file_contents
 
     def _sort_dictionary_by_keys(self, dictionary):
         return OrderedDict(sorted(dictionary.items()))
@@ -56,7 +56,6 @@ class DataLoader:
     def _simplify_categories(self, categories):
         # a simple/downsampled implementation of category-labelling for the first iteration
         BROAD_CATEGORY_INDEX_POSITION = 0
-        BROAD_CATEGORY = '1' # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
         SUBCATEGORY_INDEX_POSITION = 1
 
         simple_categories = {}
