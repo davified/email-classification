@@ -1,6 +1,6 @@
 import web
 
-from app import main
+from app import main_enron
 from app.constants import CATEGORY_4_MAP
 
 class WebServer:
@@ -8,7 +8,7 @@ class WebServer:
         return 'model and vectorizer loaded and trained'
 
     def POST(self):
-        model, vectorizer = main.initialize_model()
+        model, vectorizer = main_enron.initialize_model()
         data = web.data().decode("utf-8")
 
         vectorized_input = vectorizer.get_vectorized_data([data])

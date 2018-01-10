@@ -1,6 +1,6 @@
 import os
 
-from app.pipeline.data_vectorizer import DataVectorizer
+from app.pipeline.enron.data_vectorizer import DataVectorizer
 from sklearn.model_selection import train_test_split
 
 from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
