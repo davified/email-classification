@@ -6,3 +6,5 @@
 **/*.tfstate
 **/*.tfstate.backup
 **/*.retry
+data/yelp/dataset/*
+**/*.tar
