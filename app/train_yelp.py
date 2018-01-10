@@ -12,7 +12,7 @@ from app.machine_learning_models.LSTMModel import LSTMModel
 def initialize_model(retrain_model=False):
     app_dir = os.path.dirname(os.path.abspath(__file__))
     source_dir = os.path.join(app_dir, '../data/yelp/dataset')
-    file_path = os.path.join(source_dir, 'review_5_samples.json')
+    file_path = os.path.join(source_dir, 'review_400000_samples.json')
     models_cache_dir = os.path.join(app_dir, './models_cache')
     data_loader = DataLoader()
 

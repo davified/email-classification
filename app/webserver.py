@@ -1,10 +1,10 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from app import main_yelp
+from app import train_yelp
 
 print('intializing model...')
-model, vectorizer = main_yelp.initialize_model()
+model, vectorizer = train_yelp.initialize_model()
 
 class HTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
