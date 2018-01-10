@@ -21,7 +21,10 @@ Source: http://bailando.sims.berkeley.edu/enron_email.html
 
 4. To activate the virtual environment `source .venv/bin/activate`
 
-5. To run tests: `bin/run_tests.sh`
+5. To run unit tests, statistical tests, or all tests, run one of the following
+    - `bin/run_unit_tests.sh`
+    - `bin/run_statistical_tests.sh`
+    - `bin/run_all_tests.sh`
 
 6. To work with jupyter notebook, run `jupyter notebook`
 

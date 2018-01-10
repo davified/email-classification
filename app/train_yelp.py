@@ -60,5 +60,4 @@ def load_model_and_weights(models_cache_dir):
 
 
 if __name__ == '__main__':
-    # initialize_model(retrain_model=True)
-    initialize_model()
+    initialize_model(retrain_model=False)
