@@ -1,12 +1,11 @@
 import os
 
+from app.pipeline.data_vectorizer import DataVectorizer
 from sklearn.model_selection import train_test_split
 
-from app.machine_learning_models.CustomRandomForestClassifier import CustomRandomForestClassifier
-from app.machine_learning_models.LSTMModel import LSTMModel
-from app.pipeline.data_vectorizer import DataVectorizer
-from app.pipeline.data_loader import DataLoader
 from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
+from app.machine_learning_models.LSTMModel import LSTMModel
+from app.pipeline.enron.data_loader import DataLoader
 
 
 def initialize_model():

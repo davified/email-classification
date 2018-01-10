@@ -1,7 +1,8 @@
 import os
 import unittest
 from collections import OrderedDict
-from app.pipeline.data_loader import DataLoader
+
+from app.pipeline.enron.data_loader import DataLoader
 
 
 class TestDataLoader(unittest.TestCase):

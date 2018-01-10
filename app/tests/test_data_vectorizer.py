@@ -1,6 +1,6 @@
 import unittest
 
-from app.pipeline.data_vectorizer import DataVectorizer
+from app.pipeline.enron.data_vectorizer import DataVectorizer
 
 
 class TestDataVectorizer(unittest.TestCase):
