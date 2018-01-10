@@ -2,6 +2,8 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from sklearn.preprocessing import MultiLabelBinarizer
 
+from app.constants import INPUT_LENGTH
+
 
 class DataVectorizer:
     def __init__(self, texts, labels, num_words=10000):
@@ -9,7 +11,7 @@ class DataVectorizer:
         self.tokenizer = Tokenizer(num_words=num_words, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n')
         self.tokenizer.fit_on_texts(texts)
 
-    def get_vectorized_data(self, texts, max_length=1000):
+    def get_vectorized_data(self, texts, max_length=INPUT_LENGTH):
         if type(texts) != list:
             raise Exception('get_vectorized_data() accepts a list as the first argument')
         sequences = self._convert_texts_to_sequences(texts)
