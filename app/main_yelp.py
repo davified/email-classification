@@ -1,19 +1,20 @@
 import os
 
-from app.pipeline.enron.data_vectorizer import DataVectorizer
 from sklearn.model_selection import train_test_split
 
+from app.pipeline.yelp.data_loader import DataLoader
+from app.pipeline.yelp.data_vectorizer import DataVectorizer
 from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
 from app.machine_learning_models.LSTMModel import LSTMModel
-from app.pipeline.enron.data_loader import DataLoader
 
 
 def initialize_model():
     project_dir = os.path.dirname(os.path.abspath(__file__))
-    source_dir = os.path.join(project_dir, '../data/yelp')
-    data_loader = DataLoader(source_dir)
+    source_dir = os.path.join(project_dir, '../data/yelp/dataset')
+    file_path = os.path.join(source_dir, 'review_downsized.json')
+    data_loader = DataLoader()
 
-    _data, _labels, _ = data_loader.get_data_and_labels()
+    _data, _labels, _ = data_loader.get_data_and_labels(file_path)
 
     vectorizer = DataVectorizer(_data, _labels, num_words=20000)
     data = vectorizer.get_vectorized_data(_data, max_length=INPUT_LENGTH)

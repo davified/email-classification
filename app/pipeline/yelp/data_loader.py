@@ -2,11 +2,8 @@ import json
 
 
 class DataLoader:
-    def __init__(self, source_dir):
-        self.source_dir = source_dir
-
-    def get_data_and_labels(self):
-        reviews = self._load_data("yelp_FILL_IN_PROPER_NAME")
+    def get_data_and_labels(self, filepath):
+        reviews = self._load_data(filepath)
         texts = self._get_texts(reviews)
 
         binstars = [0 if review['stars'] <= 3 else 1 for review in reviews]
@@ -25,7 +22,7 @@ class DataLoader:
 
     def _load_data(self, filename):
         with open(filename) as f:
-            reviews = f.read().strip().split("\n")
+            reviews = f.read().strip().split('\n')
         reviews = [json.loads(review) for review in reviews]
         return reviews
 
