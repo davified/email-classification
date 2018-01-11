@@ -1,11 +1,11 @@
 ---
 
 - name: Install go agent
-  include: install.yml
+  import_tasks: install.yml
   tags:
     - build
 
 - name: Configure go agent
-  include: configure.yml
+  import_tasks: configure.yml
   tags:
     - configure

@@ -1,11 +1,11 @@
 ---
 
 - name: Install go server
-  include: build.yml
+  import_tasks: build.yml
   tags:
     - build
 
 - name: Configure go server
-  include: configure.yml
+  import_tasks: configure.yml
   tags:
     - configure

@@ -6,9 +6,9 @@
       - java.vendor in [ 'oracle', 'openjdk' ]
 
 - name: Build Oracle Java
-  include: build/build-oracle.yml
+  import_tasks: build/build-oracle.yml
   when: java.vendor == 'oracle'
 
 - name: Install OpenJDK Java
-  include: build/build-openjdk.yml
+  import_tasks: build/build-openjdk.yml
   when: java.vendor == 'openjdk'

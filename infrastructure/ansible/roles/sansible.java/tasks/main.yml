@@ -1,7 +1,7 @@
 ---
 
 - name: Build Java
-  include: build.yml
+  import_tasks: build.yml
   java:
     set_as_default: yes
     # Can be oracle or openjdk
