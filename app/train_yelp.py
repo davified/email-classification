@@ -5,7 +5,7 @@ from keras.models import model_from_json
 
 from app.pipeline.yelp.data_loader import DataLoader
 from app.pipeline.yelp.data_vectorizer import DataVectorizer
-from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS
+from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS, NO_OF_EPOCHS
 from app.machine_learning_models.LSTMModel import LSTMModel
 
 

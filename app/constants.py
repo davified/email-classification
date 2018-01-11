@@ -1,5 +1,6 @@
 INPUT_LENGTH = 300
 NO_OF_OUTPUTS = 1
+NO_OF_EPOCHS=1
 BROAD_CATEGORY = '4'  # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
 
 CATEGORY_4_MAP = {
