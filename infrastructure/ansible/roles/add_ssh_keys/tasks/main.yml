@@ -1,0 +1,23 @@
+- name: Add ssh keys
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', item.file)}}"
+    manage_dir: no
+    validate_certs: no
+  with_items:
+    - { name: 'davidtan', file: davidtan.pub}
+  tags:
+    - configure
+
+- name: Add ssh keys
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', item.file)}}"
+    manage_dir: no
+    validate_certs: no
+  with_items:
+    - { name: 'davidtan', file: davidtan.pub}
+  tags:
+    - configure

@@ -112,6 +112,15 @@
     dest: "/home/{{ gocd_agent.user }}/.gitconfig"
     src: gitconfig.j2
 
+- name: Create working directory for go-agent
+  become: yes
+  file:
+    path: "/home/{{ gocd_server.user }}/work/go-agent"
+    state: directory
+    group: "{{ gocd_server.group }}"
+    owner: "{{ gocd_server.user }}"
+    mode: 0755
+
 - name: Create defaults file for additional agents
   become: yes
   template:

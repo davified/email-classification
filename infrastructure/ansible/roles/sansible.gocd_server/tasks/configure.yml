@@ -24,6 +24,15 @@
     path: "{{ item.local_path }}"
   with_items: "{{ gocd_server.aws.s3_secret_files }}"
 
+- name: Create .ssh directory
+  become: yes
+  file:
+    path: "/home/{{ gocd_server.user }}/.ssh"
+    state: directory
+    group: "{{ gocd_server.group }}"
+    owner: "{{ gocd_server.user }}"
+    mode: 0600
+
 - name: Configure SSH
   become: yes
   copy:

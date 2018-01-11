@@ -26,7 +26,7 @@ def initialize_model(retrain_model=False):
         X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)
 
         model = LSTMModel(input_length=INPUT_LENGTH, no_of_outputs=NO_OF_OUTPUTS)
-        model.train(X_train, y_train, epochs=1)
+        model.train(X_train, y_train, epochs=NO_OF_EPOCHS)
 
         save_model_and_weights(model.classifier, models_cache_dir)
 

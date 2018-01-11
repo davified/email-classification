@@ -5,7 +5,7 @@ gocd_agent:
   agent_mem: "{{ (ansible_memtotal_mb / 4) | int }}m"
   java_version: 8
   name: default
-  no_of_agents: 2
+  no_of_agents: 1
   port: 8153
   server: localhost
   start_opts: ""

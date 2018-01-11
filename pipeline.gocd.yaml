@@ -11,5 +11,4 @@ pipelines:
               tasks:
                - exec:
                    command: bash
-                   arguments:
-                   - echo "hello gocd"
+                   arguments: echo "hello gocd"
