@@ -12,4 +12,4 @@ pipelines:
                - exec:
                    command: bash
                    arguments:
-                   - ./bin/run_unit_tests.sh
+                   - echo "hello gocd"
