@@ -17,16 +17,15 @@ class TestModelEvaluation(unittest.TestCase):
 
         # Load validation data
         tests_dir = os.path.dirname(os.path.abspath(__file__))
-        source_dir = os.path.join(tests_dir, '../../../data/yelp/dataset/review_400000_samples.json')
+        data_filepath = os.path.join(tests_dir, '../../../data/yelp/dataset/review_400000_samples.json')
 
         data_loader = DataLoader()
-        _data, _labels, _filenames = data_loader.get_data_and_labels(source_dir)
+        _data, _labels, _filenames = data_loader.get_data_and_labels(data_filepath)
 
-        vectorizer = DataVectorizer()
-        data = vectorizer.get_vectorized_data(_data)
+        data = vectorizer.data
         labels = _labels
 
-        self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(data, labels, random_state=0)
+        self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(data, labels)
 
     def test_should_have_recall_score_above_minimum_threshold(self):
         THRESHOLD = 0.85
