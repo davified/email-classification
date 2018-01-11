@@ -7,9 +7,11 @@ pipelines:
     stages:
       - test:
           jobs:
-            resources: go-agent-1
+            resources:
+              - go-agent-1
             unit_tests:
               tasks:
                - exec:
                    command: bash
-                   arguments: echo "hello gocd"
+                   arguments:
+                   - echo "hello gocd"
