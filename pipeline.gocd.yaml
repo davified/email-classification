@@ -12,6 +12,6 @@ pipelines:
             unit_tests:
               tasks:
                - exec:
-                   command: bash
+                   command: /bin/bash
                    arguments:
-                   - echo "hello gocd"
+                     - ./bin/run_unit_tests.sh
