@@ -1,8 +1,9 @@
-import os
+import os, pickle
 
 from sklearn.model_selection import train_test_split
 from keras.models import model_from_json
 
+from app.machine_learning_models.CustomRandomForestClassifier import CustomRandomForestClassifier
 from app.pipeline.yelp.data_loader import DataLoader
 from app.pipeline.yelp.data_vectorizer import DataVectorizer
 from app.constants import INPUT_LENGTH, NO_OF_OUTPUTS, NO_OF_EPOCHS
@@ -10,6 +11,35 @@ from app.machine_learning_models.LSTMModel import LSTMModel
 
 
 def initialize_model(retrain_model=False):
+    app_dir = os.path.dirname(os.path.abspath(__file__))
+    source_dir = os.path.join(app_dir, '../data/yelp/dataset')
+    models_cache_dir = os.path.join(app_dir, './models_cache')
+    pickled_model = os.path.join(models_cache_dir, 'rfc_model.pkl')
+    file_path = os.path.join(source_dir, 'review_400000_samples.json')
+
+    data_loader = DataLoader()
+    _data, _labels, _filenames = data_loader.get_data_and_labels(file_path)
+
+    vectorizer = DataVectorizer(_data, _labels)
+
+    if retrain_model:
+        data = vectorizer.get_vectorized_data(_data)
+        labels = _labels
+
+        X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)
+
+        model = CustomRandomForestClassifier()
+        model.train(X_train, y_train)
+
+        pickle.dump(model, open(pickled_model, 'wb'))
+
+    else:
+        model = pickle.load(open(pickled_model, 'rb'))
+
+    return model, vectorizer
+
+
+def initialize_lstm_model(retrain_model=False):
     app_dir = os.path.dirname(os.path.abspath(__file__))
     source_dir = os.path.join(app_dir, '../data/yelp/dataset')
     file_path = os.path.join(source_dir, 'review_400000_samples.json')

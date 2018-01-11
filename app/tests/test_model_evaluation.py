@@ -13,11 +13,11 @@ from app import train_yelp
 class TestModelEvaluation(unittest.TestCase):
     def setUp(self):
         # load trained model
-        self.model, vectorizer = train_yelp.initialize_model(retrain_model=True)
+        self.model, vectorizer = train_yelp.initialize_model(retrain_model=False)
 
         # Load validation data
         tests_dir = os.path.dirname(os.path.abspath(__file__))
-        source_dir = os.path.join(tests_dir, '../../data/yelp/dataset/review_100_samples.json')
+        source_dir = os.path.join(tests_dir, '../../data/yelp/dataset/review_400000_samples.json')
 
         data_loader = DataLoader()
         _data, _labels, _filenames = data_loader.get_data_and_labels(source_dir)
@@ -29,17 +29,17 @@ class TestModelEvaluation(unittest.TestCase):
         self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(data, labels, random_state=0)
 
     def test_should_have_recall_score_above_minimum_threshold(self):
-        THRESHOLD = 0.001
+        THRESHOLD = 0.3
 
-        y_predicted = self.model.predict(self.X_val).argmax(axis=1)
+        y_predicted = self.model.predict(self.X_val)
         recall = metrics.recall_score(self.y_val, y_predicted.round())
 
         self.assertTrue(recall > THRESHOLD, "recall of {} is below threshold of {}".format(recall, THRESHOLD))
 
     def test_should_have_precision_score_above_minimum_threshold(self):
-        THRESHOLD = 0.001
+        THRESHOLD = 0.3
 
-        y_predicted = self.model.predict(self.X_val).argmax(axis=1)
+        y_predicted = self.model.predict(self.X_val)
         precision = metrics.precision_score(self.y_val, y_predicted.round())
 
         self.assertTrue(precision > THRESHOLD, "precision of {} is below threshold of {}".format(precision, THRESHOLD))
