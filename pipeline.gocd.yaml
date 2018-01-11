@@ -10,4 +10,6 @@ pipelines:
             unit_tests:
               tasks:
                - exec:
-                   command: echo "running unit tests" && ls -la 
+                   command: bash
+                   arguments:
+                   - ./bin/run_unit_tests.sh
