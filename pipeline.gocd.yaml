@@ -6,12 +6,12 @@ pipelines:
         git: https://github.com/davified/email-classification.git
     stages:
       - test:
-          jobs:
-            resources:
-              - go-agent-1
-            unit_tests:
-              tasks:
-               - exec:
-                   command: /bin/bash
-                   arguments:
-                     - ./bin/run_unit_tests.sh
+        jobs:
+          resources:
+          - go-agent-1
+          unit_tests:
+            tasks:
+            - exec:
+                command: /bin/bash
+                arguments:
+                - ./bin/run_unit_tests.sh
