@@ -7,6 +7,8 @@ pipelines:
     stages:
       - test:
           jobs:
+            resources:
+              - go-agent-1
             unit_tests:
               tasks:
                - exec:
