@@ -3,6 +3,11 @@ NO_OF_OUTPUTS = 1
 NO_OF_EPOCHS=1
 BROAD_CATEGORY = '4'  # 1: Coarse genre, 2: Included/forwarded information, 3: Primary topics, 4: Emotional tone
 
+YELP_SENTIMENT_MAP = {
+    0: 'negative',
+    1: 'positive'
+}
+
 CATEGORY_4_MAP = {
     1: 'jubilation',
     2: 'hope / anticipation',

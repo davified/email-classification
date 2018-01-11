@@ -8,6 +8,7 @@
 **/*.retry
 data/yelp/dataset/*
 **/*.tar
-app/models_cache/*.h5
-app/models_cache/*.json
-app/models_cache/*.pkl
+**/*.h5
+**/*.json
+**/*.pkl
+**/*.npy

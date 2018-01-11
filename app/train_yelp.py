@@ -17,10 +17,10 @@ def initialize_model(retrain_model=False):
     data_loader = DataLoader()
     _data, _labels, _filenames = data_loader.get_data_and_labels(file_path)
 
-    vectorizer = DataVectorizer()
+    vectorizer = DataVectorizer(_data)
 
     if retrain_model:
-        data = vectorizer.get_vectorized_data(_data)
+        data = vectorizer.data
         labels = _labels
 
         X_train, X_val, y_train, y_val = train_test_split(data, labels, random_state=0)

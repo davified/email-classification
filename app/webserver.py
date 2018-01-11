@@ -1,10 +1,11 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from app.constants import YELP_SENTIMENT_MAP
 
 from app import train_yelp
 
 print('intializing model...')
-model, vectorizer = train_yelp.initialize_model()
+model, vectorizer = train_yelp.initialize_model(retrain_model=False)
 
 class HTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -19,13 +20,13 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         data = self.rfile.read(content_length).decode('utf-8')
 
-        vectorized_data = vectorizer.get_vectorized_data([data])
+        vectorized_data = vectorizer.vectorizer.transform([data])
         prediction = model.predict(vectorized_data)
         self.send_response(200)
         self.send_header('Content-type', 'text')
         self.end_headers()
 
-        message = {'prediction': str(prediction[0])}
+        message = {'prediction': YELP_SENTIMENT_MAP[prediction[0]]}
         self.wfile.write(bytes(json.dumps(message), 'utf8'))
 
 
