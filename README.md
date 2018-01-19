@@ -1,8 +1,4 @@
-# Email classification 
-
-## Data
- 
-Source: http://bailando.sims.berkeley.edu/enron_email.html
+# Sentiment Classification Service
 
 ## Getting started
 
@@ -21,38 +17,25 @@ Source: http://bailando.sims.berkeley.edu/enron_email.html
 
 4. To activate the virtual environment `source .venv/bin/activate`
 
-5. To run unit tests, statistical tests, or all tests, run one of the following
+5. Download data
+  - The yelp dataset is 2gb, and the yelp webpage requires your name and email before you can download it. You can download the **JSON** dataset from [here](https://www.yelp.com/dataset/download), and place it in the `./data/yelp`. Alternatively, you can also download it from the machine learning group [team drive](https://drive.google.com/drive/folders/1EBuyVQ0H_crM__0X8bchSax_zCVf8TgT)
+  - after unzipping the dataset, move review.json to `./data/yelp/dataset/`
+  - Run this command `head -400000 ./data/yelp/dataset/review.json > ./data/yelp/dataset/review_400000_samples.json`
+
+6. To run unit tests, statistical tests, or all tests, run one of the following
     - `bin/run_unit_tests.sh`
     - `bin/run_statistical_tests.sh`
     - `bin/run_all_tests.sh`
 
-6. To work with jupyter notebook, run `jupyter notebook`
+7. To train the model, run `python app/train_yelp.py`
 
-## Loading data
+8. To start the webserver, run `python app/webserver.py`. Now you make `POST` requests to `localhost:8080/` with a string as a payload:
+<img src="./images/sample_post_request.png" width=250>
 
-The yelp dataset is 2gb, and the yelp webpage requires your name and email before you can download it. You can download the **JSON** dataset from [here](https://www.yelp.com/dataset/download), and place it in the `./data/yelp`
-Alternatively, you can also download it from the machine learning group [team drive](https://drive.google.com/drive/folders/1EBuyVQ0H_crM__0X8bchSax_zCVf8TgT)
+
+7. To work with jupyter notebook, run `jupyter notebook`
 
 ## IntelliJ tests config
 
 To configure the tests to run on IntelliJ, Select 'Edit Configurations...' and configure it as such:
 ![intellij configuration](./images/intellij_ide_config.png)
-
-## DevOps
-
-### To provision and configure GoCD:
-
-Pre-requisites:
-1. Generate an AWS IAM keypair with the name `email-classification` and copy private email-classification.pem file to ~/.ssh/
-2. Obtain and export AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as environment shell variables
-
-Steps:
-```
-# To provision AWS EC2 instance (Ubuntu)
-cd infrastructure/ansible
-terraform apply
-
-# To install and configure GoCD:
-cd - # ensure you are in project root directory
-ansible-playbook -i ./infrastructure/ansible/inventory.ini ./infrastructure/ansible/main.yml -v --tags "build"
-```
